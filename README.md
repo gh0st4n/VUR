@@ -40,21 +40,3 @@ vur/
 ```
 
 ---
-
-## Cara Menggunakan VUR
-
-### **Install Paket dari VUR**
-
-Gunakan helper `T4n-Manpy`:
-
-```bash
-t4n-manpy install nama-paket
-```
-
-### **Update Paket**
-
-```bash
-t4n-manpy update nama-paket
-```
-
-### **Build Paket Manual (Tanpa Helper)
