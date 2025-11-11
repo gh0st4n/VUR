@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Package Details - VUR</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 border-b border-gray-700">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-2xl font-bold text-blue-400">VUR</a>
+                    <span class="text-gray-400 hidden sm:inline">/</span>
+                    <span id="breadcrumbName" class="text-gray-400 hidden sm:inline">Package</span>
+                </div>
+                <nav class="flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition">Home</a>
+                    <a href="search.html" class="text-gray-300 hover:text-white transition">Search</a>
+                    <button id="themeToggle" class="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Loading State -->
+        <div id="loadingState" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+            <p class="mt-4 text-gray-400">Loading package details...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="hidden text-center py-12">
+            <div class="text-red-500 text-6xl mb-4">⚠️</div>
+            <h2 class="text-2xl font-bold mb-2">Package Not Found</h2>
+            <p class="text-gray-400 mb-4">The package you're looking for doesn't exist.</p>
+            <a href="index.html" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Back to Home
+            </a>
+        </div>
+
+        <!-- Package Details -->
+        <div id="packageDetails" class="hidden">
+            <!-- Package Header -->
+            <section class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                    <div>
+                        <h1 id="packageName" class="text-3xl font-bold mb-2"></h1>
+                        <p id="packageDescription" class="text-gray-400 text-lg"></p>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <span id="packageStatus" class="px-3 py-1 rounded-full text-sm font-medium"></span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                    <div>
+                        <span class="text-gray-500">Version:</span>
+                        <span id="packageVersion" class="ml-2 font-mono"></span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500">License:</span>
+                        <span id="packageLicense" class="ml-2"></span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500">Maintainer:</span>
+                        <span id="packageMaintainer" class="ml-2"></span>
+                    </div>
+                    <div>
+                        <span class="text-gray-500">Last Updated:</span>
+                        <span id="packageLastUpdate" class="ml-2"></span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a id="packageHomepage" href="#" target="_blank" class="text-blue-400 hover:text-blue-300 transition inline-flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                        Homepage
+                    </a>
+                </div>
+            </section>
+
+            <!-- Dependencies and Dependents -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Dependencies -->
+                <section class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <h2 class="text-xl font-bold mb-4 text-blue-400">Dependencies</h2>
+                    <div id="dependenciesList" class="space-y-2">
+                        <!-- Dependencies will be loaded here -->
+                    </div>
+                    <p id="noDependencies" class="text-gray-500 hidden">No dependencies</p>
+                </section>
+
+                <!-- Dependents -->
+                <section class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <h2 class="text-xl font-bold mb-4 text-green-400">Required By</h2>
+                    <div id="dependentsList" class="space-y-2">
+                        <!-- Dependents will be loaded here -->
+                    </div>
+                    <p id="noDependents" class="text-gray-500 hidden">No packages depend on this</p>
+                </section>
+            </div>
+
+            <!-- Actions -->
+            <section class="mt-6 flex gap-4">
+                <button id="flagOutdated" class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">
+                    Flag as Outdated
+                </button>
+                <button id="installCommand" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                    Copy Install Command
+                </button>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 mt-12">
+        <div class="container mx-auto px-4 py-6 text-center text-gray-400">
+            <p>&copy; 2024 VUR - Void User Repository. Built with ❤️ for the community.</p>
+        </div>
+    </footer>
+
+    <script src="js/package.js"></script>
+</body>
+</html>

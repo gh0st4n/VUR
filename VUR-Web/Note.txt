@@ -1,0 +1,39 @@
+
+[Struktur VUR Website]
+
+vur-web/
+├── backend/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py
+│   │   ├── models.py
+│   │   ├── database.py
+│   │   ├── schemas.py
+│   │   ├── crud.py
+│   │   └── api/
+│   │       ├── __init__.py
+│   │       └── packages.py
+│   ├── requirements.txt
+│   ├── alembic/
+│   │   ├── versions/
+│   │   ├── env.py
+│   │   └── alembic.ini
+│   └── run.py
+├── frontend/
+│   ├── index.html
+│   ├── package.html
+│   ├── search.html
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   ├── main.js
+│   │   ├── package.js
+│   │   └── search.js
+│   └── assets/
+│       └── icons/
+├── database/
+│   ├── init.sql
+│   └── seed_data.sql
+├── docker-compose.yml
+├── README.md
+└── .gitignore

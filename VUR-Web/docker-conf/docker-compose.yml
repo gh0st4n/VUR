@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: vur_db
+      POSTGRES_USER: vur_user
+      POSTGRES_PASSWORD: vur_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database/seed_data.sql:/docker-entrypoint-initdb.d/seed_data.sql
+    networks:
+      - vur-network
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://vur_user:vur_password@postgres:5432/vur_db
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app
+    networks:
+      - vur-network
+
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - backend
+    networks:
+      - vur-network
+
+volumes:
+  postgres_data:
+
+networks:
+  vur-network:
+    driver: bridge
